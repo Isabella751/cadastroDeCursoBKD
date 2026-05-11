@@ -1,0 +1,49 @@
+package br.com.senai.cadastroDeCursoBKD.controller;
+
+import br.com.senai.cadastroDeCursoBKD.cursos.*;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+@RestController
+@RequestMapping("cursos")
+public class CursoController {
+
+    @Autowired
+    private CursoRepository repository;
+
+    @GetMapping
+    public Page<DadosListagemCurso> listarCursos(@PageableDefault(size = 10, sort = {"nome"}) Pageable paginacao){
+        return repository.findAllByAtivoTrue(paginacao)
+                .map(DadosListagemCurso::new);
+    }
+
+    @PostMapping
+    @Transactional
+    public void cadastrarCurso(@RequestBody @Valid DadosCadastroCurso dados){
+        repository.save(new Curso(dados));
+    }
+    
+    @DeleteMapping("/{id}")
+    @Transactional
+    public void deletarCurso(@PathVariable Long id){
+        var curso = repository.getReferenceById(id);
+        curso.excluirCurso();
+    }
+
+    @GetMapping("/{id}")
+    public DadosDetalhamentoCurso detalharCurso(@PathVariable Long id){
+        Curso curso = repository.findByIdAndAtivoTrue(id)
+                .orElseThrow(() -> new ResponseStatusException(
+                        HttpStatus.NOT_FOUND,
+                        "Curso não existe"
+                ));
+        return new DadosDetalhamentoCurso(curso);
+    }
+}
