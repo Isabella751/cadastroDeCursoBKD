@@ -15,4 +15,5 @@ public record DadosCadastroCurso(
         @NotNull
         Curso.Periodo periodo
 ) {
+
 }

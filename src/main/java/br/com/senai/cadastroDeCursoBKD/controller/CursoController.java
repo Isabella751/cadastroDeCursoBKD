@@ -11,6 +11,9 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.Arrays;
+import java.util.List;
+
 @RestController
 @RequestMapping("cursos")
 public class CursoController {
@@ -29,6 +32,13 @@ public class CursoController {
     public void cadastrarCurso(@RequestBody @Valid DadosCadastroCurso dados){
         repository.save(new Curso(dados));
     }
+
+    @PutMapping
+    @Transactional
+    public void atualizarCurso(@RequestBody @Valid DadosAtualizarCurso dados){
+        var curso = repository.getReferenceById(dados.id());
+        curso.atualizarCurso(dados);
+    }
     
     @DeleteMapping("/{id}")
     @Transactional
@@ -46,4 +56,62 @@ public class CursoController {
                 ));
         return new DadosDetalhamentoCurso(curso);
     }
+
+    @GetMapping("/periodos")
+    public List<Curso.Periodo> listarPeriodos() {
+
+        return Arrays.asList(Curso.Periodo.values());
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+package br.com.senai.cadastroDeCursoBKD.controller;
+
+import br.com.senai.cadastroDeCursoBKD.cursos.*;
+import io.swagger.v3.oas.annotations.OpenAPIDefinition;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.ExampleObject;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import org.springdoc.core.annotations.ParameterObject;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+//Executar o projeto e checar se a documentação foi gerada, acessando:
+//http://localhost:8080/swagger-ui/index.html
+
