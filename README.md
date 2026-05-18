@@ -128,7 +128,7 @@ A migration inicial cria a tabela `cursos` com todas as restrições necessária
 ## 1️⃣ Clone o repositório
 
 ```bash
-git clone https://github.com/Isabella751/cadastroDeCursoBKD
+git clone https://github.com/Isabella751/cadastroDeCursoBKD.git
 ```
 
 ---
