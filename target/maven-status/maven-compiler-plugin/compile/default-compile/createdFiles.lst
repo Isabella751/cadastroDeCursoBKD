@@ -1,9 +1,0 @@
-br\com\senai\cadastroDeCursoBKD\cursos\DadosCadastroCurso.class
-br\com\senai\cadastroDeCursoBKD\cursos\DadosDetalhamentoCurso.class
-br\com\senai\cadastroDeCursoBKD\cursos\Curso$Periodo.class
-br\com\senai\cadastroDeCursoBKD\cursos\DadosAtualizarCurso.class
-br\com\senai\cadastroDeCursoBKD\controller\CursoController.class
-br\com\senai\cadastroDeCursoBKD\cursos\Curso.class
-br\com\senai\cadastroDeCursoBKD\cursos\DadosListagemCurso.class
-br\com\senai\cadastroDeCursoBKD\cursos\CursoRepository.class
-br\com\senai\cadastroDeCursoBKD\CadastroDeCursoBkdApplication.class
